@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SPSHC20.iml" filepath="$PROJECT_DIR$/SPSHC20.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sps-hc20.droid.iml" filepath="$PROJECT_DIR$/sps-hc20.droid.iml" />
     </modules>
   </component>
 </project>
