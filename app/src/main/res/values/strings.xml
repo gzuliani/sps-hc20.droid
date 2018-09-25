@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">SPS-HC20</string>
+    <string name="arduino_board_not_found">Circuito di interfaccia non rilevato</string>
+    <string name="arduino_board_connected">Connesso al circuito di interfaccia</string>
+    <string name="arduino_board_disconnected">Disconnesso dal circuito di interfaccia</string>
+    <string name="timer_start">Avvia</string>
+    <string name="timer_stop">Pausa</string>
+    <string name="timer_set">Cambia</string>
+    <string name="timer_reset">Azzera</string>
+    <string name="home_caption">LOCALI</string>
+    <string name="guest_caption">OSPITI</string>
+    <string name="seventh_foul">7F</string>
+    <string name="first_timeout">T1</string>
+    <string name="second_timeout">T2</string>
+    <string name="increment">+</string>
+    <string name="decrement">-</string>
+    <string name="connect">Connetti</string>
+    <string name="disconnect">Disconnetti</string>
+    <string name="siren">Sirena</string>
+    <string name="timeout">Timeout</string>
+    <string name="timeout_dialog_title">Timeout in corso</string>
+    <string name="timeout_dialog_message">Il tempo di gioco è fermo a %02d:%02d.\n\nPremere %s alla ripresa del gioco.</string>
+    <string name="set_time_dialog_title">Cambia orario</string>
+    <string name="set_time_dialog_message">Impostare il nuovo orario:</string>
+    <string name="set_time_dialog_minute_second_separator">:</string>
+    <string name="version_label">v. %s</string>
+    <string name="siren_on_period_end">Suona la sirena di fine tempo</string>
+    <string name="siren_on_timeout_call">Suona la sirena di inizio timeout</string>
+    <string name="siren_on_timeout_end">Suona la sirena di immintente fine timeout</string>
+    <string name="leading_zero_in_minutes">Mostra lo zero iniziale nei minuti</string>
+    <string name="high_resolution_last_minute">Mostra i decimi di secondo nell\'ultimo minuto</string>
+    <string name="period_duration">Durata tempo (min)</string>
+    <string name="preferences_dialog_title">Configurazione</string>
+    <string name="preferences_dialog_message">Impostare i parametri di funzionamento:</string>
+    <string name="configure">Configura</string>
+</resources>
