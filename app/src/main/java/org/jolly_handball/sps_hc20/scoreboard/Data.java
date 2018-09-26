@@ -17,6 +17,23 @@ public class Data {
         this.isSirenOn = isSirenOn;
     }
 
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Data))
+            return false;
+        return (timer.equals(((Data) obj).timer))
+                && (homeTeam.equals(((Data) obj).homeTeam))
+                && (guestTeam.equals(((Data) obj).guestTeam))
+                && (isSirenOn == ((Data) obj).isSirenOn);
+    }
+
+    public int hashCode() {
+        return 31
+                + 7 * timer.hashCode()
+                + 11 * homeTeam.hashCode()
+                + 13 * guestTeam.hashCode()
+                + (isSirenOn ? 17 : 19);
+    }
+
     boolean isHomeSeventhFoul() {
         return homeTeam.isSeventhFoul();
     }

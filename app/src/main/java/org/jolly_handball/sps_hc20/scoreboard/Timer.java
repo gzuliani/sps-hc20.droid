@@ -17,6 +17,23 @@ public class Timer {
         this.leadingZeroInMinutes = leadingZeroInMinutes;
     }
 
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Timer))
+            return false;
+        return (leftFigure == ((Timer) obj).leftFigure)
+                && (rightFigure == ((Timer) obj).rightFigure)
+                && (isDotLit == ((Timer) obj).isDotLit)
+                && (leadingZeroInMinutes == ((Timer) obj).leadingZeroInMinutes);
+    }
+
+    public int hashCode() {
+        return 31
+                + 7 * leftFigure
+                + 11 * rightFigure
+                + (isDotLit ? 13 : 17)
+                + (leadingZeroInMinutes ? 19 : 23);
+    }
+
     int getLeftFigure() {
         return leftFigure;
     }

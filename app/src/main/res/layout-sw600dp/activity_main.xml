@@ -9,6 +9,41 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/comm_stats_packets_sent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/comm_stats_packets_refused"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_sent"
+        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_sent" />
+
+    <TextView
+        android:id="@+id/comm_stats_packets_lost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_refused"
+        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_refused" />
+
+    <TextView
+        android:id="@+id/comm_stats_other_errors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_lost"
+        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_lost" />
+
+    <TextView
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

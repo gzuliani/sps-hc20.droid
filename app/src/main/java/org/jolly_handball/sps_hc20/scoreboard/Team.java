@@ -20,6 +20,25 @@ public class Team {
         this.isSecondTimeout = isSecondTimeout;
     }
 
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Team))
+            return false;
+        return (score == ((Team) obj).score)
+                && (set == ((Team) obj).set)
+                && (isSeventhFoul == ((Team) obj).isSeventhFoul)
+                && (isFirstTimeout == ((Team) obj).isFirstTimeout)
+                && (isSecondTimeout == ((Team) obj).isSecondTimeout);
+    }
+
+    public int hashCode() {
+        return 37
+                + 7 * score
+                + 11 * set
+                + (isSeventhFoul ? 13 : 17)
+                + (isFirstTimeout ? 19 : 23)
+                + (isSecondTimeout ? 29 : 31);
+    }
+
     int getScore() {
         return score;
     }
@@ -36,5 +55,7 @@ public class Team {
         return isFirstTimeout;
     }
 
-    boolean isSecondTimeout() { return isSecondTimeout; }
+    boolean isSecondTimeout() {
+        return isSecondTimeout;
+    }
 }

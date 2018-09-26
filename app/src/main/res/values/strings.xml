@@ -33,4 +33,9 @@
     <string name="preferences_dialog_title">Configurazione</string>
     <string name="preferences_dialog_message">Impostare i parametri di funzionamento:</string>
     <string name="configure">Configura</string>
+    <string name="preferences_show_transmission_stats">Mostra le statistiche di comunicazione</string>
+    <string name="comm_stats_packets_sent">Pacchetti spediti: %s</string>
+    <string name="comm_stats_packets_refused">Pacchetti rifiutati: %s</string>
+    <string name="comm_stats_packets_lost">Pacchetti persi: %s</string>
+    <string name="comm_stats_other_errors">Errori generici: %s</string>
 </resources>

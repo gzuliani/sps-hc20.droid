@@ -84,6 +84,13 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="@string/high_resolution_last_minute" />
+
+        <Switch
+            android:id="@+id/preferences_show_transmission_stats"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/preferences_show_transmission_stats" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
