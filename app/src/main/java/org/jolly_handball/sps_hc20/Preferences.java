@@ -9,6 +9,7 @@ class Preferences {
     private boolean sirenOnTimeoutCall = true;
     private boolean sirenOnTimeoutEnd = true;
     private TimeViewPreferences timeViewPreferences = new TimeViewPreferences();
+    private boolean showTransmissionStats = false;
 
     int getMinutesPerPeriod() {
         return minutesPerPeriod;
@@ -44,5 +45,13 @@ class Preferences {
 
     TimeViewPreferences getTimeViewPreferences() {
         return timeViewPreferences;
+    }
+
+    public boolean isShowTransmissionStats() {
+        return showTransmissionStats;
+    }
+
+    public void setShowTransmissionStats(boolean showTransmissionStats) {
+        this.showTransmissionStats = showTransmissionStats;
     }
 }

@@ -22,6 +22,7 @@ public class PreferencesDialogFragment extends AutoExpandingDialogFragment {
     private Switch sirenOnTimeoutEnd = null;
     private Switch leadingZeroInMinutes = null;
     private Switch highResolutionLastMinute = null;
+    private Switch showTransmissionStats = null;
 
     public void setUp(Preferences preferences, Observer observer) {
         this.preferences = preferences;
@@ -47,6 +48,7 @@ public class PreferencesDialogFragment extends AutoExpandingDialogFragment {
                                 preferences.setSirenOnTimeoutEnd(sirenOnTimeoutEnd.isChecked());
                                 timeViewPreferences.setHighResolutionLastMinute(highResolutionLastMinute.isChecked());
                                 timeViewPreferences.setLeadingZeroInMinutes(leadingZeroInMinutes.isChecked());
+                                preferences.setShowTransmissionStats(showTransmissionStats.isChecked());
 
                                 if (observer != null)
                                     observer.preferencesChanged();
@@ -79,6 +81,9 @@ public class PreferencesDialogFragment extends AutoExpandingDialogFragment {
 
         highResolutionLastMinute = view.findViewById(R.id.preferences_high_resolution_last_minute);
         highResolutionLastMinute.setChecked(timeViewPreferences.isHighResolutionLastMinute());
+
+        showTransmissionStats = view.findViewById(R.id.preferences_show_transmission_stats);
+        showTransmissionStats.setChecked(preferences.isShowTransmissionStats());
 
         return builder.create();
     }

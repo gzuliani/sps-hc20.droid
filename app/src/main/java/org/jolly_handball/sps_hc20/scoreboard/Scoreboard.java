@@ -19,6 +19,7 @@ public class Scoreboard {
     private SevenSegmentsFont font = new SevenSegmentsFont();
     private Data lastTransmittedData = null;
     private byte[] txBuffer = new byte[DATA_LENGTH + 2];
+    private byte[] rxBuffer = null;
 
     private UsbPort usbPort;
 
@@ -29,7 +30,9 @@ public class Scoreboard {
 
     public Scoreboard(UsbPort port) {
         usbPort = port;
+
         prepareTxBuffer();
+        rxBuffer = new byte[usbPort.getSuggestedInputBufferSize()];
 
         ackCount = 0;
         nakCount = 0;
@@ -104,19 +107,19 @@ public class Scoreboard {
             txBuffer[9] |= (byte) 0x10;
 
         usbPort.send(txBuffer, TIMEOUT);
-        byte[] response = new byte[]{NUL,};
+        rxBuffer[0] = NUL;
 
-        while (usbPort.receive(response, TIMEOUT) > 0)
+        while (usbPort.receive(rxBuffer, TIMEOUT) > 0)
             ;
 
-        if (response[0] == NUL)
+        if (rxBuffer[0] == NUL)
             timeoutCount += 1;
 
-        else if (response[0] == ACK) {
+        else if (rxBuffer[0] == ACK) {
             ackCount += 1;
             lastTransmittedData = data;
 
-        } else if (response[0] == NAK)
+        } else if (rxBuffer[0] == NAK)
             nakCount += 1;
 
         else

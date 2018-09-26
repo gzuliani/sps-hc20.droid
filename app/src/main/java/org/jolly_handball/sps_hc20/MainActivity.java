@@ -40,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
 
     Preferences preferences = new Preferences();
 
+    // transmission statistics
+    TextView commStatsPacketsSent = null;
+    TextView commStatsPacketsRefused = null;
+    TextView commStatsPacketsLost = null;
+    TextView commStatsOtherErrors = null;
+
     // buttons
     Button sirenButton = null;
     Button timeoutButton = null;
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
             if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 if (usbPort.isConnected()) {
                     usbPort.disconnect();
+                    scoreboard = null;
                     Toast.makeText(getApplicationContext(),
                             R.string.arduino_board_disconnected,
                             Toast.LENGTH_LONG).show();
@@ -88,12 +95,16 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
 
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         usbPort = new UsbPort(usbManager);
-        scoreboard = new Scoreboard(usbPort);
 
         // register the ACTION_USB_DEVICE_DETACHED event listener
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         registerReceiver(usbReceiver, filter);
+
+        commStatsPacketsSent = findViewById(R.id.comm_stats_packets_sent);
+        commStatsPacketsRefused = findViewById(R.id.comm_stats_packets_refused);
+        commStatsPacketsLost = findViewById(R.id.comm_stats_packets_lost);
+        commStatsOtherErrors = findViewById(R.id.comm_stats_other_errors);
 
         /*
          * time management
@@ -420,6 +431,7 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
             usbPort.connect((UsbDevice) intent
                     .getParcelableExtra(UsbManager.EXTRA_DEVICE));
+            scoreboard = new Scoreboard(usbPort);
             updateConnectButtonLabel();
         }
 
@@ -462,6 +474,13 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
                                                 guestTeam.isFirstTimeout(),
                                                 guestTeam.isSecondTimeout()),
                                         isSirenOn || sirenButton.isPressed()));
+
+                        if (preferences.isShowTransmissionStats()) {
+                            commStatsPacketsSent.setText(String.format(getString(R.string.comm_stats_packets_sent), Integer.toString(scoreboard.getAckCount())));
+                            commStatsPacketsRefused.setText(String.format(getString(R.string.comm_stats_packets_refused), Integer.toString(scoreboard.getNakCount())));
+                            commStatsPacketsLost.setText(String.format(getString(R.string.comm_stats_packets_lost), Integer.toString(scoreboard.getTimeoutCount())));
+                            commStatsOtherErrors.setText(String.format(getString(R.string.comm_stats_other_errors), Integer.toString(scoreboard.getErrorCount())));
+                        }
                     }
                 }
 
@@ -473,6 +492,22 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
     public void preferencesChanged() {
         gameTimer.configure(preferences.getTimeViewPreferences());
         gameTimer.setPeriodDuration(preferences.getMinutesPerPeriod());
+
+        if (preferences.isShowTransmissionStats()) {
+            commStatsPacketsSent.setVisibility(View.VISIBLE);
+            commStatsPacketsSent.setText(String.format(getString(R.string.comm_stats_packets_sent), Integer.toString(0)));
+            commStatsPacketsRefused.setVisibility(View.VISIBLE);
+            commStatsPacketsRefused.setText(String.format(getString(R.string.comm_stats_packets_refused), Integer.toString(0)));
+            commStatsPacketsLost.setVisibility(View.VISIBLE);
+            commStatsPacketsLost.setText(String.format(getString(R.string.comm_stats_packets_lost), Integer.toString(0)));
+            commStatsOtherErrors.setVisibility(View.VISIBLE);
+            commStatsOtherErrors.setText(String.format(getString(R.string.comm_stats_other_errors), Integer.toString(0)));
+        } else {
+            commStatsPacketsSent.setVisibility(View.INVISIBLE);
+            commStatsPacketsRefused.setVisibility(View.INVISIBLE);
+            commStatsPacketsLost.setVisibility(View.INVISIBLE);
+            commStatsOtherErrors.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -482,7 +517,7 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
     }
 
     private void updateConnectButtonLabel() {
-        if (usbPort.isConnected()) {
+        if (scoreboard != null) {
             connectButton.setText(R.string.disconnect);
         } else {
             connectButton.setText(R.string.connect);

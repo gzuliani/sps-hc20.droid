@@ -6,7 +6,6 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
-import android.util.Log;
 
 public class UsbPort {
 
@@ -62,16 +61,8 @@ public class UsbPort {
     public int send(byte[] data, int timeout) {
         if (usbConnection == null)
             return 0;
-
-        Log.d("UsbPort", " sending " + data.length + " bytes...");
-        Log.d("UsbPort", "buffer = \"" + toHexString(data) + "\"...");
-
-        int numOfBytesSent = usbConnection.bulkTransfer(
+        return usbConnection.bulkTransfer(
                 usbOutEndpoint, data, data.length, timeout);
-
-        Log.d("UsbPort", numOfBytesSent + " bytes sent...");
-
-        return numOfBytesSent;
     }
 
     public int getSuggestedInputBufferSize() {
@@ -81,17 +72,8 @@ public class UsbPort {
     public int receive(byte[] buffer, int timeout) {
         if (usbConnection == null)
             return -1;
-
-        Log.d("UsbPort", "requesting " + buffer.length + " bytes...");
-
-        int numOfBytesReceived = usbConnection.bulkTransfer(
+        return usbConnection.bulkTransfer(
                 usbInEndpoint, buffer, buffer.length, timeout);
-
-        Log.d("UsbPort", numOfBytesReceived + " bytes received...");
-        Log.d("UsbPort", "buffer = \"" + toHexString(buffer) + "\"...");
-        Log.d("UsbPort", "buffer.length = " + buffer.length + "...");
-
-        return numOfBytesReceived;
     }
 
     private boolean attach(UsbDevice device) {
