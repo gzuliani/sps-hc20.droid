@@ -1,7 +1,9 @@
 package org.jolly_handball.sps_hc20;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
@@ -514,6 +516,21 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
     protected void onPause() {
         guiUpdateScheduler.removeCallbacks(guiUpdateProcess);
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.confirm_quit)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ExitActivity.exitApplication(MainActivity.this);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
     }
 
     private void updateConnectButtonLabel() {
