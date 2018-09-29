@@ -36,7 +36,6 @@ The main objects in this package are:
 * **`UsbPort`**: models a virtual serial port over USB;
 * **`MainActivity`**: controls the application's UI.
 
-
 The "[Comunicazione seriale Arduino/Android via USB](https://gzuliani.bitbucket.io/arduino/arduino-android-usb.html)" page (italian only) describes how the `UsbPort` has been implemented.
 
 ## Known issues
@@ -46,8 +45,8 @@ The scoreboard's siren may emit a short buzz when the application connects to th
 A simple work-around is to connect the scoreboard to the interface circuit when the application is already running:
 
  1. switch the Android terminal on;
- 2. connect the Arduino board to the Android terminal (use an OTG-USB cable!);
- 3. confirm that you want to start the *SPS HC20* application;
+ 2. connect the Arduino board to the Android terminal with an USB OTG cable;
+ 3. Android will ask you if it should open the *SPS HC20* application: choose yes;
  4. connect the scoreboard to the Arduino board.
 
 A more reliable solution would be disabling the autoreset feature (see
