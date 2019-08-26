@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The *SPS HC20 - droid edition* is an Android app that controls the SPS HC20 scoreboard by means of the custom-made, Arduino-based interface described in "[Controllo di un tabellone segnapunti con Arduino](https://gzuliani.bitbucket.io/arduino/arduino-scoreboard.html)" (italian only). It is a porting of the **consolle.py** application included in the [SPS HC20 Suite](https://bitbucket.org/gzuliani/sps-hc20/overview).
+The *SPS HC20 - droid edition* is an Android app that controls the SPS HC20 scoreboard by means of the custom-made, Arduino-based interface described in "[Controllo di un tabellone segnapunti con Arduino](https://gzuliani.github.io/arduino/arduino-scoreboard.html)" (italian only). It is a porting of the **consolle.py** application included in the [SPS HC20 Suite](https://github.com/gzuliani/sps-hc20/overview).
 
 The *SPS HC20 - droid edition* can be used on any Android terminal with USB-OTG
 support or as a stand-alone application on devices that do not support it, given that it won't be able to communicate with the interface circuit.
@@ -36,7 +36,7 @@ The main objects in this package are:
 * **`UsbPort`**: models a virtual serial port over USB;
 * **`MainActivity`**: controls the application's UI.
 
-The "[Comunicazione seriale Arduino/Android via USB](https://gzuliani.bitbucket.io/arduino/arduino-android-usb.html)" page (italian only) describes how the `UsbPort` has been implemented.
+The "[Comunicazione seriale Arduino/Android via USB](https://gzuliani.github.io/arduino/arduino-android-usb.html)" page (italian only) describes how the `UsbPort` has been implemented.
 
 ## Known issues
 
