@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The *SPS HC20 - droid edition* is an Android app that controls the SPS HC20 scoreboard by means of the custom-made, Arduino-based interface described in "[Controllo di un tabellone segnapunti con Arduino](https://gzuliani.github.io/arduino/arduino-scoreboard.html)" (italian only). It is a porting of the **consolle.py** application included in the [SPS HC20 Suite](https://github.com/gzuliani/sps-hc20/overview).
+The *SPS HC20 - droid edition* is an Android app that controls the SPS HC20 scoreboard by means of the custom-made, Arduino-based interface described in "[Controllo di un tabellone segnapunti con Arduino](https://gzuliani.github.io/arduino/arduino-scoreboard.html)" (italian only). It is a porting of the **consolle.py** application included in the [SPS HC20 Suite](https://github.com/gzuliani/sps-hc20).
 
 The *SPS HC20 - droid edition* can be used on any Android terminal with USB-OTG
 support or as a stand-alone application on devices that do not support it, given that it won't be able to communicate with the interface circuit.
