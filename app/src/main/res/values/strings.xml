@@ -18,8 +18,8 @@
     <string name="disconnect">Disconnetti</string>
     <string name="siren">Sirena</string>
     <string name="timeout">Timeout</string>
-    <string name="timeout_dialog_title">Timeout in corso</string>
-    <string name="timeout_dialog_message">Il tempo di gioco è fermo a %02d:%02d.\n\nPremere %s alla ripresa del gioco.</string>
+    <string name="timeout_hint">Timeout in corso!\nIl tempo di gioco è fermo a %s.</string>
+    <string name="timeout_restart">Riprendi</string>
     <string name="set_time_dialog_title">Cambia orario</string>
     <string name="set_time_dialog_message">Impostare il nuovo orario:</string>
     <string name="set_time_dialog_minute_second_separator">:</string>
@@ -38,5 +38,5 @@
     <string name="comm_stats_packets_refused">Pacchetti rifiutati: %s</string>
     <string name="comm_stats_packets_lost">Pacchetti persi: %s</string>
     <string name="comm_stats_other_errors">Errori generici: %s</string>
-    <string name="confirm_quit">Vuoi veramente chiudere l\'applicazione?</string>
+    <string name="confirm_quit">Vuoi veramente abbandonare l\'applicazione?</string>
 </resources>

@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
     TextView commStatsPacketsRefused = null;
     TextView commStatsPacketsLost = null;
     TextView commStatsOtherErrors = null;
+
+    // timeout
+    LinearLayout timerLayout = null;
+    LinearLayout timeoutLayout = null;
+    TextView timeoutHint = null;
 
     // buttons
     Button sirenButton = null;
@@ -108,6 +114,13 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
         commStatsPacketsLost = findViewById(R.id.comm_stats_packets_lost);
         commStatsOtherErrors = findViewById(R.id.comm_stats_other_errors);
 
+        timerLayout = findViewById(R.id.timer_layout);
+        timeoutLayout = findViewById(R.id.timeout_layout);
+        timeoutHint = findViewById(R.id.timeout_hint);
+
+        timerLayout.setVisibility(View.VISIBLE);
+        timeoutLayout.setVisibility(View.GONE);
+
         /*
          * time management
          */
@@ -148,6 +161,20 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
                         timerWidget.reset();
                     }
                 });
+
+        final Button timeoutRestartButton = findViewById(R.id.timeout_restart);
+        timeoutRestartButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        timeoutTimer.stop();
+                        timerWidget.changeTimer(gameTimer);
+                        gameTimer.start();
+                        timerLayout.setVisibility(View.VISIBLE);
+                        timeoutLayout.setVisibility(View.GONE);
+                    }
+                });
+
 
         timerWidget = new TimerWidget(
                 gameTimer,
@@ -413,9 +440,10 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
                 timerWidget.changeTimer(timeoutTimer);
                 timeoutTimer.start();
 
-                TimeoutDialogFragment dialog = new TimeoutDialogFragment();
-                dialog.setUp(gameTimer, timeoutTimer, timerWidget);
-                dialog.show(getFragmentManager(), "Timeout");
+                timeoutHint.setText(String.format(getString(R.string.timeout_hint), gameTimer.figuresAsText()));
+
+                timerLayout.setVisibility(View.GONE);
+                timeoutLayout.setVisibility(View.VISIBLE);
             }
         });
 

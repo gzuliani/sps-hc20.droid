@@ -127,6 +127,50 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/timeout_layout"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingLeft="196dp"
+        android:paddingRight="196dp"
+        android:paddingTop="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer_layout">
+
+        <TextView
+            android:id="@+id/timeout_hint"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/timeout_restart"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/timeout_restart"
+            android:textColor="@drawable/timer_button_selector"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <TableLayout
         android:id="@+id/score_layout"
         android:layout_width="match_parent"
@@ -135,7 +179,7 @@
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_layout">
+        app:layout_constraintTop_toBottomOf="@+id/timeout_layout">
 
         <TableRow
             android:layout_width="match_parent"
