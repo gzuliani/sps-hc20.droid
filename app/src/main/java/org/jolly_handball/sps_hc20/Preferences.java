@@ -1,8 +1,14 @@
 package org.jolly_handball.sps_hc20;
 
+import android.content.SharedPreferences;
+
 import org.jolly_handball.sps_hc20.chrono.TimeViewPreferences;
 
 class Preferences {
+
+    public interface Observer {
+        void onPreferencesChanged();
+    }
 
     private int minutesPerPeriod = 30;
     private boolean sirenOnPeriodEnd = true;
@@ -10,37 +16,31 @@ class Preferences {
     private boolean sirenOnTimeoutEnd = true;
     private TimeViewPreferences timeViewPreferences = new TimeViewPreferences();
     private boolean showTransmissionStats = false;
+    private Observer observer = null;
+
+    private static final Preferences instance = new Preferences();
+
+    private Preferences() {
+    }
+
+    public static Preferences getInstance() {
+        return instance;
+    }
 
     int getMinutesPerPeriod() {
         return minutesPerPeriod;
-    }
-
-    void setMinutesPerPeriod(int minutesPerPeriod) {
-        this.minutesPerPeriod = minutesPerPeriod;
     }
 
     boolean isSirenOnPeriodEnd() {
         return sirenOnPeriodEnd;
     }
 
-    void setSirenOnPeriodEnd(boolean sirenOnPeriodEnd) {
-        this.sirenOnPeriodEnd = sirenOnPeriodEnd;
-    }
-
     boolean isSirenOnTimeoutCall() {
         return sirenOnTimeoutCall;
     }
 
-    void setSirenOnTimeoutCall(boolean sirenOnTimeoutCall) {
-        this.sirenOnTimeoutCall = sirenOnTimeoutCall;
-    }
-
     boolean isSirenOnTimeoutEnd() {
         return sirenOnTimeoutEnd;
-    }
-
-    void setSirenOnTimeoutEnd(boolean sirenOnTimeoutEnd) {
-        this.sirenOnTimeoutEnd = sirenOnTimeoutEnd;
     }
 
     TimeViewPreferences getTimeViewPreferences() {
@@ -51,7 +51,20 @@ class Preferences {
         return showTransmissionStats;
     }
 
-    public void setShowTransmissionStats(boolean showTransmissionStats) {
-        this.showTransmissionStats = showTransmissionStats;
+    public void registerObserver(Observer observer) {
+        this.observer = observer;
+    }
+
+    public void load(SharedPreferences preferences) {
+        minutesPerPeriod = preferences.getInt("period_duration", 30);
+        sirenOnPeriodEnd = preferences.getBoolean("siren_on_period_end", true);
+        sirenOnTimeoutCall = preferences.getBoolean("siren_on_timeout_call", true);
+        sirenOnTimeoutEnd = preferences.getBoolean("siren_on_timeout_end", true);
+        timeViewPreferences.setLeadingZeroInMinutes(preferences.getBoolean("leading_zero_in_minutes", false));
+        timeViewPreferences.setHighResolutionLastMinute(preferences.getBoolean("high_resolution_last_minute", true));
+        showTransmissionStats = preferences.getBoolean("show_transmission_stats", false);
+
+        if (observer != null)
+            observer.onPreferencesChanged();
     }
 }

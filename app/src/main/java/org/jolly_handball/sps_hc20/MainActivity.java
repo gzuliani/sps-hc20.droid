@@ -11,6 +11,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -31,7 +32,7 @@ import org.jolly_handball.sps_hc20.scoreboard.Scoreboard;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class MainActivity extends AppCompatActivity implements PreferencesDialogFragment.Observer {
+public class MainActivity extends AppCompatActivity implements Preferences.Observer {
 
     static private int TIMEOUT_DURATION = 1; // minutes
     static private int SIREN_BLAST_DURATION = 1000; // milliseconds
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
     private final int guiUpdateDelay = 20; // milliseconds
     Runnable guiUpdateProcess = null;
 
-    Preferences preferences = new Preferences();
+    Preferences preferences = null;
 
     // transmission statistics
     TextView commStatsPacketsSent = null;
@@ -91,6 +92,29 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
         }
     };
 
+    // Preferences.Observer interface
+    @Override
+    public void onPreferencesChanged() {
+        gameTimer.configure(preferences.getTimeViewPreferences());
+        gameTimer.setPeriodDuration(preferences.getMinutesPerPeriod());
+
+        if (preferences.isShowTransmissionStats()) {
+            commStatsPacketsSent.setVisibility(View.VISIBLE);
+            commStatsPacketsSent.setText(String.format(getString(R.string.comm_stats_packets_sent), Integer.toString(0)));
+            commStatsPacketsRefused.setVisibility(View.VISIBLE);
+            commStatsPacketsRefused.setText(String.format(getString(R.string.comm_stats_packets_refused), Integer.toString(0)));
+            commStatsPacketsLost.setVisibility(View.VISIBLE);
+            commStatsPacketsLost.setText(String.format(getString(R.string.comm_stats_packets_lost), Integer.toString(0)));
+            commStatsOtherErrors.setVisibility(View.VISIBLE);
+            commStatsOtherErrors.setText(String.format(getString(R.string.comm_stats_other_errors), Integer.toString(0)));
+        } else {
+            commStatsPacketsSent.setVisibility(View.INVISIBLE);
+            commStatsPacketsRefused.setVisibility(View.INVISIBLE);
+            commStatsPacketsLost.setVisibility(View.INVISIBLE);
+            commStatsOtherErrors.setVisibility(View.INVISIBLE);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,10 +145,11 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
         timerLayout.setVisibility(View.VISIBLE);
         timeoutLayout.setVisibility(View.GONE);
 
+        preferences = Preferences.getInstance();
+
         /*
          * time management
          */
-        preferences = new Preferences();
 
         gameTimer = new Timer(preferences.getTimeViewPreferences());
         gameTimer.setPeriodDuration(preferences.getMinutesPerPeriod());
@@ -382,9 +407,8 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
         configureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PreferencesDialogFragment dialog = new PreferencesDialogFragment();
-                dialog.setUp(preferences, MainActivity.this);
-                dialog.show(getFragmentManager(), "Preferences");
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -447,8 +471,9 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
             }
         });
 
-        // open the configuration window
-        configureButton.callOnClick();
+        // load the preferences (will automatically set the ui accordingly)
+        preferences.registerObserver(this);
+        preferences.load(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -517,27 +542,6 @@ public class MainActivity extends AppCompatActivity implements PreferencesDialog
                 guiUpdateScheduler.postDelayed(guiUpdateProcess, guiUpdateDelay);
             }
         }, guiUpdateDelay);
-    }
-
-    public void preferencesChanged() {
-        gameTimer.configure(preferences.getTimeViewPreferences());
-        gameTimer.setPeriodDuration(preferences.getMinutesPerPeriod());
-
-        if (preferences.isShowTransmissionStats()) {
-            commStatsPacketsSent.setVisibility(View.VISIBLE);
-            commStatsPacketsSent.setText(String.format(getString(R.string.comm_stats_packets_sent), Integer.toString(0)));
-            commStatsPacketsRefused.setVisibility(View.VISIBLE);
-            commStatsPacketsRefused.setText(String.format(getString(R.string.comm_stats_packets_refused), Integer.toString(0)));
-            commStatsPacketsLost.setVisibility(View.VISIBLE);
-            commStatsPacketsLost.setText(String.format(getString(R.string.comm_stats_packets_lost), Integer.toString(0)));
-            commStatsOtherErrors.setVisibility(View.VISIBLE);
-            commStatsOtherErrors.setText(String.format(getString(R.string.comm_stats_other_errors), Integer.toString(0)));
-        } else {
-            commStatsPacketsSent.setVisibility(View.INVISIBLE);
-            commStatsPacketsRefused.setVisibility(View.INVISIBLE);
-            commStatsPacketsLost.setVisibility(View.INVISIBLE);
-            commStatsOtherErrors.setVisibility(View.INVISIBLE);
-        }
     }
 
     @Override

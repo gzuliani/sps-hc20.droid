@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="general_preferences"
+        android:title="@string/general_preferences">
+
+        <SeekBarPreference
+            android:defaultValue="30"
+            android:key="period_duration"
+            android:max="30"
+            android:min="0"
+            android:title="@string/period_duration"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="siren_preferences"
+        android:title="@string/siren_preferences">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="siren_on_period_end"
+            android:title="@string/siren_on_period_end" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="siren_on_timeout_call"
+            android:title="@string/siren_on_timeout_call" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="siren_on_timeout_end"
+            android:title="@string/siren_on_timeout_end" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="timer_preferences"
+        android:title="@string/timer_preferences">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="leading_zero_in_minutes"
+            android:title="@string/leading_zero_in_minutes" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="high_resolution_last_minute"
+            android:title="@string/high_resolution_last_minute" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="debug_preferences"
+        android:title="@string/debug_preferences">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="show_transmission_stats"
+            android:title="@string/show_transmission_stats" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

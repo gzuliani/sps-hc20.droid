@@ -7,77 +7,20 @@
     android:background="@color/base2"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/comm_stats_packets_sent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/comm_stats_packets_refused"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_sent"
-        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_sent" />
-
-    <TextView
-        android:id="@+id/comm_stats_packets_lost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_refused"
-        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_refused" />
-
-    <TextView
-        android:id="@+id/comm_stats_other_errors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_lost"
-        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_lost" />
-
-    <TextView
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/red"
-        android:textSize="144sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/timer_layout"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:orientation="horizontal"
-        android:paddingBottom="0dp"
         android:paddingLeft="256dp"
-        android:paddingRight="256dp"
         android:paddingTop="0dp"
+        android:paddingRight="256dp"
+        android:paddingBottom="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer">
@@ -127,23 +70,23 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:orientation="horizontal"
-        android:paddingBottom="0dp"
         android:paddingLeft="256dp"
-        android:paddingRight="256dp"
         android:paddingTop="0dp"
+        android:paddingRight="256dp"
+        android:paddingBottom="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_layout">
 
         <TextView
             android:id="@+id/timeout_hint"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
             android:gravity="center_horizontal"
@@ -164,6 +107,66 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_layout">
+
+        <Button
+            android:id="@+id/configure"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/configure"
+            android:textColor="@drawable/main_button_selector"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/buttons_layout"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/connect"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:text="@string/connect"
+            android:textColor="@drawable/main_button_selector"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/test"
+            tools:layout_editor_absoluteX="4dp" />
+
+        <Button
+            android:id="@+id/siren"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/siren"
+            android:textColor="@drawable/main_button_selector"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/timeout"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/timeout"
+            android:textColor="@drawable/main_button_selector"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TableLayout
@@ -415,64 +418,61 @@
 
     </TableLayout>
 
-    <LinearLayout
-        android:id="@+id/buttons_layout"
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/comm_stats_packets_sent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/comm_stats_packets_refused"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_sent"
+        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_sent" />
+
+    <TextView
+        android:id="@+id/comm_stats_packets_lost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_refused"
+        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_refused" />
+
+    <TextView
+        android:id="@+id/comm_stats_other_errors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/comm_stats_packets_lost"
+        app:layout_constraintTop_toBottomOf="@+id/comm_stats_packets_lost" />
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_layout">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/configure"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/configure"
-            android:textColor="@drawable/main_button_selector"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/buttons_layout"
-            tools:layout_editor_absoluteX="16dp" />
-
-        <Button
-            android:id="@+id/connect"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1"
-            android:text="@string/connect"
-            android:textColor="@drawable/main_button_selector"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/test"
-            tools:layout_editor_absoluteX="4dp" />
-
-        <Button
-            android:id="@+id/siren"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/siren"
-            android:textColor="@drawable/main_button_selector"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/timeout"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/timeout"
-            android:textColor="@drawable/main_button_selector"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:textSize="144sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,6 +14,7 @@
     <string name="second_timeout">T2</string>
     <string name="increment">+</string>
     <string name="decrement">-</string>
+    <string name="configure">Configura</string>
     <string name="connect">Connetti</string>
     <string name="disconnect">Disconnetti</string>
     <string name="siren">Sirena</string>
@@ -24,19 +25,20 @@
     <string name="set_time_dialog_message">Impostare il nuovo orario:</string>
     <string name="set_time_dialog_minute_second_separator">:</string>
     <string name="version_label">v. %s</string>
+    <string name="general_preferences">Generale</string>
+    <string name="siren_preferences">Sirena</string>
+    <string name="timer_preferences">Contaminuti</string>
+    <string name="debug_preferences">Diagnostica</string>
     <string name="siren_on_period_end">Suona la sirena di fine tempo</string>
     <string name="siren_on_timeout_call">Suona la sirena di inizio timeout</string>
     <string name="siren_on_timeout_end">Suona la sirena di immintente fine timeout</string>
     <string name="leading_zero_in_minutes">Mostra lo zero iniziale nei minuti</string>
     <string name="high_resolution_last_minute">Mostra i decimi di secondo nell\'ultimo minuto</string>
-    <string name="period_duration">Durata tempo (min)</string>
-    <string name="preferences_dialog_title">Configurazione</string>
-    <string name="preferences_dialog_message">Impostare i parametri di funzionamento:</string>
-    <string name="configure">Configura</string>
-    <string name="preferences_show_transmission_stats">Mostra le statistiche di comunicazione</string>
+    <string name="period_duration">Durata di un tempo (in minuti)</string>
+   <string name="show_transmission_stats">Mostra le statistiche di comunicazione</string>
     <string name="comm_stats_packets_sent">Pacchetti spediti: %s</string>
     <string name="comm_stats_packets_refused">Pacchetti rifiutati: %s</string>
     <string name="comm_stats_packets_lost">Pacchetti persi: %s</string>
     <string name="comm_stats_other_errors">Errori generici: %s</string>
-    <string name="confirm_quit">Vuoi veramente abbandonare l\'applicazione?</string>
+    <string name="confirm_quit">Abbandonare l\'applicazione?</string>
 </resources>
