@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -16,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                Preferences.getInstance().load(prefs);
+                Globals.preferences.load(prefs);
             }
         };
 
@@ -31,8 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).registerOnSharedPreferenceChangeListener(listener);
     }
-
-
+    
     @Override
     protected void onPause() {
         super.onPause();

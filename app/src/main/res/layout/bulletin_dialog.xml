@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BulletinDialogFragment">
+
+    <LinearLayout
+        android:id="@+id/bulletin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+      <EditText
+            android:id="@+id/bulletin_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bulletin_default_text"
+            android:ems="30"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/bulletin_speed_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/bulletin_speed_label"
+            android:textColor="@color/base01"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/bulletin_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:entries="@array/bulletin_speed_array"/>
+
+        <Button
+            android:id="@+id/bulletin_show_hide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/bulletin_show" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

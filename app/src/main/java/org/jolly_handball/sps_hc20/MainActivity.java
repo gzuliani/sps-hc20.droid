@@ -10,6 +10,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.view.View;
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
     private Team guestTeam = null;
     private TeamWidget guestTeamWidget = null;
     private boolean isSirenOn = false;
-    private Scoreboard scoreboard = null;
 
     // serial connection
     private UsbManager usbManager;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
             if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 if (usbPort.isConnected()) {
                     usbPort.disconnect();
-                    scoreboard = null;
+                    Globals.scoreboard = null;
                     Toast.makeText(getApplicationContext(),
                             R.string.arduino_board_disconnected,
                             Toast.LENGTH_LONG).show();
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
         timerLayout.setVisibility(View.VISIBLE);
         timeoutLayout.setVisibility(View.GONE);
 
-        preferences = Preferences.getInstance();
+        preferences = Globals.preferences;
 
         /*
          * time management
@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
             @Override
             public void onClick(View view) {
                 if (usbPort.isConnected()) {
-                    scoreboard = null;
+                    Globals.scoreboard = null;
                     usbPort.disconnect();
                 } else {
                     HashMap<String, UsbDevice> deviceList = usbManager.getDeviceList();
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
                 }
 
                 if (usbPort.isConnected()) {
-                    scoreboard = new Scoreboard(usbPort);
+                    Globals.scoreboard = new Scoreboard(usbPort);
                     Toast.makeText(getApplicationContext(),
                             R.string.arduino_board_connected,
                             Toast.LENGTH_LONG).show();
@@ -471,9 +471,23 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
             }
         });
 
+        final Button bulletinButton = findViewById(R.id.bulletin);
+        bulletinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BulletinDialogFragment dialog = new BulletinDialogFragment();
+                dialog.show(getFragmentManager(), "Bulletin");
+            }
+        });
+
         // load the preferences (will automatically set the ui accordingly)
         preferences.registerObserver(this);
         preferences.load(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
+        // let the user know what the current period duration is
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar periodDurationAlert = Snackbar.make(parentLayout, String.format(getResources().getString(R.string.period_duration_alert), preferences.getMinutesPerPeriod(), getResources().getString(R.string.configure)), Snackbar.LENGTH_LONG);
+        periodDurationAlert.show();
     }
 
     @Override
@@ -486,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
             usbPort.connect((UsbDevice) intent
                     .getParcelableExtra(UsbManager.EXTRA_DEVICE));
-            scoreboard = new Scoreboard(usbPort);
+            Globals.scoreboard = new Scoreboard(usbPort);
             updateConnectButtonLabel();
         }
 
@@ -507,10 +521,10 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
 
                     timeoutButton.setEnabled(gameTimer.isRunning());
 
-                    if (scoreboard != null) {
+                    if (Globals.scoreboard != null) {
                         HiResTime now = timerWidget.now();
                         Figures figures = timerWidget.figures();
-                        scoreboard.update(
+                        Globals.scoreboard.update(
                                 new Data(
                                         new org.jolly_handball.sps_hc20.scoreboard.Timer(
                                                 figures.getLeft(),
@@ -531,10 +545,10 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
                                         isSirenOn || sirenButton.isPressed()));
 
                         if (preferences.isShowTransmissionStats()) {
-                            commStatsPacketsSent.setText(String.format(getString(R.string.comm_stats_packets_sent), Integer.toString(scoreboard.getAckCount())));
-                            commStatsPacketsRefused.setText(String.format(getString(R.string.comm_stats_packets_refused), Integer.toString(scoreboard.getNakCount())));
-                            commStatsPacketsLost.setText(String.format(getString(R.string.comm_stats_packets_lost), Integer.toString(scoreboard.getTimeoutCount())));
-                            commStatsOtherErrors.setText(String.format(getString(R.string.comm_stats_other_errors), Integer.toString(scoreboard.getErrorCount())));
+                            commStatsPacketsSent.setText(String.format(getString(R.string.comm_stats_packets_sent), Integer.toString(Globals.scoreboard.getAckCount())));
+                            commStatsPacketsRefused.setText(String.format(getString(R.string.comm_stats_packets_refused), Integer.toString(Globals.scoreboard.getNakCount())));
+                            commStatsPacketsLost.setText(String.format(getString(R.string.comm_stats_packets_lost), Integer.toString(Globals.scoreboard.getTimeoutCount())));
+                            commStatsOtherErrors.setText(String.format(getString(R.string.comm_stats_other_errors), Integer.toString(Globals.scoreboard.getErrorCount())));
                         }
                     }
                 }
@@ -566,7 +580,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
     }
 
     private void updateConnectButtonLabel() {
-        if (scoreboard != null) {
+        if (Globals.scoreboard != null) {
             connectButton.setText(R.string.disconnect);
         } else {
             connectButton.setText(R.string.connect);

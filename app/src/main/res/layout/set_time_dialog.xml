@@ -21,11 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <NumberPicker
-            android:id="@+id/set_time_second"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <TextView
             android:id="@+id/set_time_separator"
             android:layout_width="wrap_content"
@@ -36,6 +31,11 @@
             android:gravity="center_vertical"
             android:text="@string/set_time_dialog_minute_second_separator"
             android:textSize="16sp" />
+
+        <NumberPicker
+            android:id="@+id/set_time_second"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

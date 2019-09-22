@@ -2,6 +2,8 @@ package org.jolly_handball.sps_hc20.scoreboard;
 
 import org.jolly_handball.sps_hc20.UsbPort;
 
+import java.util.Arrays;
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -19,7 +21,7 @@ public class Scoreboard {
     private SevenSegmentsFont font = new SevenSegmentsFont();
     private Data lastTransmittedData = null;
     private byte[] txBuffer = new byte[DATA_LENGTH + 2];
-    private byte[] rxBuffer = null;
+    private byte[] rxBuffer;
 
     private UsbPort usbPort;
 
@@ -27,6 +29,8 @@ public class Scoreboard {
     private int nakCount;
     private int timeoutCount;
     private int errorCount;
+
+    private ScrollingText scrollingText = new ScrollingText(font);
 
     public Scoreboard(UsbPort port) {
         usbPort = port;
@@ -57,73 +61,96 @@ public class Scoreboard {
     }
 
     public void update(Data data) {
-        if ((lastTransmittedData != null)
-                && (lastTransmittedData.equals(data)))
-            return;
+        // the buffer that will contain the new data to transmit
+        byte[] buffer = Arrays.copyOf(txBuffer, txBuffer.length);
 
-        txBuffer[1] = encodeDigit(units(data.getHomeSet()));
-        txBuffer[2] = encodeDigit(min(1, hundreds(data.getHomeScore())));
-        txBuffer[3] = encodeDigit(tens(data.getHomeScore()));
-        txBuffer[4] = encodeDigit(units(data.getHomeScore()));
+        if ((lastTransmittedData == null)
+                || (!lastTransmittedData.equals(data)))
+        {
+            buffer[1] = encodeDigit(units(data.getHomeSet()));
+            buffer[2] = encodeDigit(min(1, hundreds(data.getHomeScore())));
+            buffer[3] = encodeDigit(tens(data.getHomeScore()));
+            buffer[4] = encodeDigit(units(data.getHomeScore()));
 
-        int minute = data.getTimerLeftFigure();
-        int second = data.getTimerRightFigure();
-        int tensMinute = tens(minute);
+            int minute = data.getTimerLeftFigure();
+            int second = data.getTimerRightFigure();
+            int tensMinute = tens(minute);
 
-        if (data.isLeadingZeroInMinutes())
-            tensMinute = max(0, tensMinute);
+            if (data.isLeadingZeroInMinutes())
+                tensMinute = max(0, tensMinute);
 
-        txBuffer[5] = encodeDigit(tensMinute);
-        txBuffer[6] = encodeDigit(units(minute));
-        txBuffer[7] = encodeDigit(max(0, tens(second)));
-        txBuffer[8] = encodeDigit(units(second));
-        txBuffer[9] = encodeDigit(min(1, hundreds(data.getGuestScore())));
-        txBuffer[10] = encodeDigit(tens(data.getGuestScore()));
-        txBuffer[11] = encodeDigit(units(data.getGuestScore()));
-        txBuffer[12] = encodeDigit(units(data.getGuestSet()));
+            buffer[5] = encodeDigit(tensMinute);
+            buffer[6] = encodeDigit(units(minute));
+            buffer[7] = encodeDigit(max(0, tens(second)));
+            buffer[8] = encodeDigit(units(second));
+            buffer[9] = encodeDigit(min(1, hundreds(data.getGuestScore())));
+            buffer[10] = encodeDigit(tens(data.getGuestScore()));
+            buffer[11] = encodeDigit(units(data.getGuestScore()));
+            buffer[12] = encodeDigit(units(data.getGuestSet()));
 
-        if (data.isHomeSeventhFoul())
-            txBuffer[2] |= (byte) 0x40;
+            if (data.isHomeSeventhFoul())
+                buffer[2] |= (byte) 0x40;
 
-        if (data.isHomeFirstTimeout())
-            txBuffer[2] |= (byte) 0x20;
+            if (data.isHomeFirstTimeout())
+                buffer[2] |= (byte) 0x20;
 
-        if (data.isHomeSecondTimeout())
-            txBuffer[2] |= (byte) 0x10;
+            if (data.isHomeSecondTimeout())
+                buffer[2] |= (byte) 0x10;
 
-        if (data.isSirenOn())
-            txBuffer[5] |= (byte) 0x80;
+            if (data.isSirenOn())
+                buffer[5] |= (byte) 0x80;
 
-        if (data.isTimerDotLit())
-            txBuffer[6] |= (byte) 0x80;
+            if (data.isTimerDotLit())
+                buffer[6] |= (byte) 0x80;
 
-        if (data.isGuestFirstTimeout())
-            txBuffer[9] |= (byte) 0x40;
+            if (data.isGuestFirstTimeout())
+                buffer[9] |= (byte) 0x40;
 
-        if (data.isGuestSecondTimeout())
-            txBuffer[9] |= (byte) 0x20;
+            if (data.isGuestSecondTimeout())
+                buffer[9] |= (byte) 0x20;
 
-        if (data.isGuestSeventhFoul())
-            txBuffer[9] |= (byte) 0x10;
+            if (data.isGuestSeventhFoul())
+                buffer[9] |= (byte) 0x10;
+        }
 
-        usbPort.send(txBuffer, TIMEOUT);
-        rxBuffer[0] = NUL;
+        scrollingText.write(buffer);
 
-        while (usbPort.receive(rxBuffer, TIMEOUT) > 0)
-            ;
+        if (!Arrays.equals(buffer, txBuffer)) {
+            usbPort.send(buffer, TIMEOUT);
+            rxBuffer[0] = NUL;
 
-        if (rxBuffer[0] == NUL)
-            timeoutCount += 1;
+            while (usbPort.receive(rxBuffer, TIMEOUT) > 0)
+                ;
 
-        else if (rxBuffer[0] == ACK) {
-            ackCount += 1;
-            lastTransmittedData = data;
+            if (rxBuffer[0] == NUL)
+                timeoutCount += 1;
 
-        } else if (rxBuffer[0] == NAK)
-            nakCount += 1;
+            else if (rxBuffer[0] == ACK) {
+                ackCount += 1;
+                lastTransmittedData = data;
+                txBuffer = buffer;
 
-        else
-            errorCount += 1;
+            } else if (rxBuffer[0] == NAK)
+                nakCount += 1;
+
+            else
+                errorCount += 1;
+        }
+    }
+
+    public void showScrollingText(String text, int delay)
+    {
+        scrollingText.show(text, delay);
+    }
+
+    public void hideScrollingText()
+    {
+        scrollingText.hide();
+
+        // force a display update
+        Data data = lastTransmittedData;
+        lastTransmittedData = null;
+        update(data);
     }
 
     private void prepareTxBuffer() {

@@ -18,15 +18,6 @@ class Preferences {
     private boolean showTransmissionStats = false;
     private Observer observer = null;
 
-    private static final Preferences instance = new Preferences();
-
-    private Preferences() {
-    }
-
-    public static Preferences getInstance() {
-        return instance;
-    }
-
     int getMinutesPerPeriod() {
         return minutesPerPeriod;
     }
@@ -47,15 +38,15 @@ class Preferences {
         return timeViewPreferences;
     }
 
-    public boolean isShowTransmissionStats() {
+    boolean isShowTransmissionStats() {
         return showTransmissionStats;
     }
 
-    public void registerObserver(Observer observer) {
+    void registerObserver(Observer observer) {
         this.observer = observer;
     }
 
-    public void load(SharedPreferences preferences) {
+    void load(SharedPreferences preferences) {
         minutesPerPeriod = preferences.getInt("period_duration", 30);
         sirenOnPeriodEnd = preferences.getBoolean("siren_on_period_end", true);
         sirenOnTimeoutCall = preferences.getBoolean("siren_on_timeout_call", true);

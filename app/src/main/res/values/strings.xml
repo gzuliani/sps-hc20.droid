@@ -18,6 +18,7 @@
     <string name="connect">Connetti</string>
     <string name="disconnect">Disconnetti</string>
     <string name="siren">Sirena</string>
+    <string name="bulletin">Comunicato</string>
     <string name="timeout">Timeout</string>
     <string name="timeout_hint">Timeout in corso!\nIl tempo di gioco è fermo a %s.</string>
     <string name="timeout_restart">Riprendi</string>
@@ -35,10 +36,28 @@
     <string name="leading_zero_in_minutes">Mostra lo zero iniziale nei minuti</string>
     <string name="high_resolution_last_minute">Mostra i decimi di secondo nell\'ultimo minuto</string>
     <string name="period_duration">Durata di un tempo (in minuti)</string>
-   <string name="show_transmission_stats">Mostra le statistiche di comunicazione</string>
+    <string name="show_transmission_stats">Mostra le statistiche di comunicazione</string>
     <string name="comm_stats_packets_sent">Pacchetti spediti: %s</string>
     <string name="comm_stats_packets_refused">Pacchetti rifiutati: %s</string>
     <string name="comm_stats_packets_lost">Pacchetti persi: %s</string>
     <string name="comm_stats_other_errors">Errori generici: %s</string>
     <string name="confirm_quit">Abbandonare l\'applicazione?</string>
+    <string name="period_duration_alert">Un tempo di gioco dura %d minuti. Scegliere «%s» per modificare il valore.</string>
+    <string name="bulletin_dialog_title">Comunicato</string>
+    <string name="bulletin_dialog_message">Mostra un testo scorrevole sul display</string>
+    <string name="bulletin_default_text">Inserire qui il testo scorrevole</string>
+    <string name="bulletin_speed_label">Velocità di scorrimento</string>
+    <string name="bulletin_speed_low">Bassa</string>
+    <string name="bulletin_speed_medium">Media</string>
+    <string name="bulletin_speed_high">Alta</string>
+    <string name="bulletin_speed_ludicrous">Smodata</string>
+    <string name="bulletin_show">Mostra</string>
+    <string name="bulletin_hide">Nascondi</string>
+    <!-- see associated delays in BulletinFragmentDialog object -->
+    <string-array name="bulletin_speed_array">
+        <item>@string/bulletin_speed_low</item>
+        <item>@string/bulletin_speed_medium</item>
+        <item>@string/bulletin_speed_high</item>
+        <item>@string/bulletin_speed_ludicrous</item>
+    </string-array>
 </resources>
