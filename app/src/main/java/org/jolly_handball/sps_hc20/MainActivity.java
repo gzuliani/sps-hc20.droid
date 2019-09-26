@@ -464,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements Preferences.Obser
                 timerWidget.changeTimer(timeoutTimer);
                 timeoutTimer.start();
 
-                timeoutHint.setText(String.format(getString(R.string.timeout_hint), gameTimer.figuresAsText()));
+                timeoutHint.setText(String.format(getString(R.string.timeout_hint), gameTimer.figuresAsText().trim()));
 
                 timerLayout.setVisibility(View.GONE);
                 timeoutLayout.setVisibility(View.VISIBLE);

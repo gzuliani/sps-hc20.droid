@@ -31,6 +31,6 @@ class TimeView {
         if (this.preferences.isLeadingZeroInMinutes())
             timeLayout = "%02d:%02d"; // leading zero
         else
-            timeLayout = "% 2d:%02d"; // no leading zero
+            timeLayout = "%2d:%02d"; // no leading zero
     }
 }
