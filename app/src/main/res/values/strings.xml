@@ -32,7 +32,7 @@
     <string name="debug_preferences">Diagnostica</string>
     <string name="siren_on_period_end">Suona la sirena di fine tempo</string>
     <string name="siren_on_timeout_call">Suona la sirena di inizio timeout</string>
-    <string name="siren_on_timeout_end">Suona la sirena di immintente fine timeout</string>
+    <string name="siren_on_timeout_end">Suona la sirena di imminente fine timeout</string>
     <string name="leading_zero_in_minutes">Mostra lo zero iniziale nei minuti</string>
     <string name="high_resolution_last_minute">Mostra i decimi di secondo nell\'ultimo minuto</string>
     <string name="period_duration">Durata di un tempo (in minuti)</string>
